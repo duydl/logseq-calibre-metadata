@@ -10,15 +10,17 @@ module.exports = {
       "@semantic-release/npm",
       { "npmPublish": false }
     ],
-    [
+
     '@semantic-release/git',
-      
-    '@semantic-release/exec',
+    
+    [
+      '@semantic-release/exec',
       {
         prepareCmd:
           'zip -qq -r ' + pluginName + '-${nextRelease.version}.zip package.json icon.jpg README.md dist/',
       },
-    ],
+    ]
+    ,
     [
       '@semantic-release/github',
       {
