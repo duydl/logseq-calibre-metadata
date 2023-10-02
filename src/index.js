@@ -21,9 +21,9 @@ const settings = [
     {
         key: "pageTitleTemplate",
         title: "Page Title Template",
-        description: "Define the template for new Calibre page titles. The default template is '@{{title}} - {{authors}} ({{date}})'.",
+        description: "Define the template for new Calibre page titles. The default template is 'calibre/{{title}} - {{authors}} ({{date}})'.",
         type: "string",
-        default: "@{{title}} - {{authors}} ({{date}})"
+        default: "calibre/{{title}} - {{authors}} ({{date}})"
     },
     {
         key: "pageProperties",
@@ -199,7 +199,7 @@ function createCalibrePage(item) {
     
     const calibre_item = item;
 
-    let page_title = logseq.settings.PageTitleTemplate;
+    let page_title = logseq.settings.pageTitleTemplate;
     let page_title_variables = page_title.match(/({{[\s\S]*?}})/gm);
 
     page_title_variables.forEach(page_title_var => {
@@ -268,10 +268,8 @@ function createCalibrePage(item) {
         page_properties[property] = property_value ? property_value : "NA";
         });
 
-        console.log("create Page");
+        console.log("Create Page");
         create(page_title, page_properties, calibre_item).then(() => {
-        console.log("Async function completed");
-        // You can continue with other operations here
     });
 
 }
@@ -295,10 +293,10 @@ async function create(page_title, page_properties, calibre_item) {
 
         const synopsisBlock = await logseq.Editor.appendBlockInPage(newPage.uuid, "[[Synopsis]]");
 
-        await logseq.Editor.insertBlock(synopsisBlock.uuid, calibre_item.comments);
+        await logseq.Editor.insertBlock(synopsisBlock.uuid, calibre_item?.comments? calibre_item?.comments : "");
 
         // Append two MacroRenderers for View and Sync in calibre-annotation Plugin
-        await logseq.Editor.prependBlockInPage(newPage.uuid, `{{renderer calibreViewer, special, ${logseq.settings.serverLink}/#book_id=${calibre_item.application_id}&fmt=${logseq.settings.bookFormat}&library_id=${logseq.settings.calibreLibrary}&mode=read_book}} {{renderer calibreHighlight, false, 2000, ${logseq.settings.serverLink}, ${logseq.settings.calibreLibrary}, ${calibre_item.application_id}, ${logseq.settings.bookFormat}}}`);
+        await logseq.Editor.prependBlockInPage(newPage.uuid, `[${calibre_item.title}](calibre://show-book/${logseq.settings.calibreLibrary}/${calibre_item.application_id})  {{renderer calibreViewer, special, ${logseq.settings.serverLink}/#book_id=${calibre_item.application_id}&fmt=${logseq.settings.bookFormat}&library_id=${logseq.settings.calibreLibrary}&mode=read_book}} {{renderer calibreHighlight, false, 2000, ${logseq.settings.serverLink}, ${logseq.settings.calibreLibrary}, ${calibre_item.application_id}, ${logseq.settings.bookFormat}}}`);
 
 }
 
