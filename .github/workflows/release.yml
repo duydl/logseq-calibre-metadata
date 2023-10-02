@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 jobs:
   release:
     name: Release
@@ -26,6 +23,7 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - uses: CupOfTea696/gh-action-auto-release@v1.0.0
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
