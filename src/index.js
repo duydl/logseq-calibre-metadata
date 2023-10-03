@@ -12,6 +12,12 @@ const settings = [
         default: ""
     },
     {
+        key: "addBlockInstead",
+        title: "Add a new block at cursor instead of line to new page",
+        type: "boolean",
+        default: false
+    },
+    {
         key: "serverLink",
         title: "Content Server Link",
         description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain.",
@@ -277,18 +283,37 @@ function createCalibrePage(item) {
 
 async function create(page_title, page_properties, calibre_item) {
 
-    // const allPages = await logseq.Editor.getAllPages()
-    const newPage = await logseq.Editor.createPage(page_title, page_properties, {
-        format: "markdown",
-        redirect: false,
-        journal: false,
-        createFirstBlock: false
-    });
+    if (logseq.settings.addBlockInstead) {
+        
+        const currentBlock = await logseq.Editor.getCurrentBlock()
+        const newBlock = await logseq.Editor.insertBlock(currentBlock.uuid, `${page_title}`, {
+            before: true,
+            focus: true,
+            isPageBlock: true,
+            properties: page_properties,
+        })
+        
+        // await logseq.Editor.insertAtEditingCursor(`${page_title}`);
+        // Object.entries(page_properties).forEach(([key, value]) => logseq.Editor.upsertBlockProperty(currentBlock.uuid, key, value))
 
-    console.log("newPage finish");
+        const synopsisBlock = await logseq.Editor.insertBlock(newBlock.uuid, "[[Synopsis]]");
 
-    logseq.Editor.insertAtEditingCursor(`[[${page_title}]]`);
-    logseq.Editor.exitEditingMode();
+        await logseq.Editor.insertBlock(synopsisBlock.uuid, calibre_item?.comments? calibre_item?.comments : "");
+        
+
+        // Append two MacroRenderers for View and Sync in calibre-annotation Plugin
+        await logseq.Editor.insertBlock(newBlock.uuid, `[${calibre_item.title}](calibre://show-book/${logseq.settings.calibreLibrary}/${calibre_item.application_id})  {{renderer calibreViewer, special, ${logseq.settings.serverLink}/#book_id=${calibre_item.application_id}&fmt=${logseq.settings.bookFormat}&library_id=${logseq.settings.calibreLibrary}&mode=read_book}} {{renderer calibreHighlight, false, 2000, ${logseq.settings.serverLink}, ${logseq.settings.calibreLibrary}, ${calibre_item.application_id}, ${logseq.settings.bookFormat}}}`);
+    }
+    else {
+        const newPage = await logseq.Editor.createPage(page_title, page_properties, {
+            format: "markdown",
+            redirect: false,
+            journal: false,
+            createFirstBlock: false
+        });
+
+        logseq.Editor.insertAtEditingCursor(`[[${page_title}]]`);
+        logseq.Editor.exitEditingMode();
 
 
         const synopsisBlock = await logseq.Editor.appendBlockInPage(newPage.uuid, "[[Synopsis]]");
@@ -297,6 +322,7 @@ async function create(page_title, page_properties, calibre_item) {
 
         // Append two MacroRenderers for View and Sync in calibre-annotation Plugin
         await logseq.Editor.prependBlockInPage(newPage.uuid, `[${calibre_item.title}](calibre://show-book/${logseq.settings.calibreLibrary}/${calibre_item.application_id})  {{renderer calibreViewer, special, ${logseq.settings.serverLink}/#book_id=${calibre_item.application_id}&fmt=${logseq.settings.bookFormat}&library_id=${logseq.settings.calibreLibrary}&mode=read_book}} {{renderer calibreHighlight, false, 2000, ${logseq.settings.serverLink}, ${logseq.settings.calibreLibrary}, ${calibre_item.application_id}, ${logseq.settings.bookFormat}}}`);
+    }
 
 }
 
