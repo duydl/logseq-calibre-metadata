@@ -26,8 +26,8 @@ Enhance your note-taking experience with Logseq by integrating it with [Calibre]
 ## Usage
 
 To start using these plugins, you'll need to start the Content server of Calibre. 
-
-It is possible to add the content server binary, `calibre-server.exe`, to your startup items for quicker access.
+You could configure Calibre to start the server automatically. 
+![Alt text](screenshots/image.png)
 
 
 ### calibreMetadata

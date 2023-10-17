@@ -20,7 +20,7 @@ const settings = [
     {
         key: "serverLink",
         title: "Content Server Link",
-        description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain.",
+        description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain. Add the link WITHOUT the extra /; otherwise it could result in error. ",
         type: "string",
         default: "http://localhost:8080"
     },
