@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/duydl/logseq-calibre-metadata/compare/v1.1.0...v1.2.0) (2023-10-03)
+
+
+### Features
+
+* Add option to insert block instead of page ([ae938b8](https://github.com/duydl/logseq-calibre-metadata/commit/ae938b81a755761be59f7309f36d5d80673cbb09))
+
 # [1.1.0](https://github.com/duydl/logseq-calibre-metadata/compare/v1.0.0...v1.1.0) (2023-10-02)
 
 
