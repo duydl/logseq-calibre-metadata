@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/duydl/logseq-calibre-metadata/compare/v1.2.0...v1.2.1) (2023-10-30)
+
+
+### Bug Fixes
+
+* update settings tooltip and README ([b561894](https://github.com/duydl/logseq-calibre-metadata/commit/b56189465b65b7dddd010604fc82f6db3ccf23f8))
+
 # [1.2.0](https://github.com/duydl/logseq-calibre-metadata/compare/v1.1.0...v1.2.0) (2023-10-03)
 
 
