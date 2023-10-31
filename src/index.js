@@ -20,7 +20,7 @@ const settings = [
     {
         key: "serverLink",
         title: "Content Server Link",
-        description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain. Add the link WITHOUT the extra /; otherwise it could result in error. ",
+        description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain. <br>Add the link WITHOUT the extra /; otherwise it could result in error. <br>If update to library isn't registered, use the link for local home network device i.e the one displayed when clicking on Connect/share in Calibre to avoid the cache problem. ",
         type: "string",
         default: "http://localhost:8080"
     },
@@ -61,18 +61,34 @@ search_bar.addEventListener("input", () => {
     typingTimer = setDriftlessTimeout(() => getCalibreItems(search_bar.value), 750);
 });
 
+
+// const username = '';
+// const passwordd = '';
+
+// const credentials = new Headers({
+//     'Authorization': 'Basic ' + btoa(`${username}:${passwordd}`),
+//   });
+
+
 function getCalibreItems(search_input) {
     const fetch_link = logseq.settings.serverLink + "/ajax/books/" + logseq.settings.calibreLibrary
     console.log(fetch_link)
     let search_results;
-    fetch(fetch_link)
+    fetch(fetch_link, 
+        // {
+        // method: 'GET',
+        // credentials: 'include',
+        // headers: credentials
+        // }
+    )
     .then(response => {
         if (!response.ok) {
-            logseq.UI.showMsg('calibreMetadata: Make sure to start Content Server.');
+            logseq.UI.showMsg('calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.');
+            console.log(response)
+            return
         }
         return response.json();})
     .then(data => {
-            console.log(data)
             const books = [];
             for (const key in data) {
                 if (data.hasOwnProperty(key)) {
