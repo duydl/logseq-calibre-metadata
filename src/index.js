@@ -20,7 +20,7 @@ const settings = [
     {
         key: "serverLink",
         title: "Content Server Link",
-        description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain. <br>Add the link WITHOUT the extra /; otherwise it could result in error. <br>If update to library isn't registered, use the link for local home network device i.e the one displayed when clicking on Connect/share in Calibre to avoid the cache problem. ",
+        description: "Specify the link to your content server. The default is localhost:8080, but change it if you use a different port or domain. <br>Add the link WITHOUT the extra /; otherwise it could result in error. <br>If update to library isn't registered, use the link for local home network device i.e the one displayed when clicking on Connect/share in Calibre to avoid the cache problem.",
         type: "string",
         default: "http://localhost:8080"
     },
@@ -74,6 +74,7 @@ function getCalibreItems(search_input) {
     const fetch_link = logseq.settings.serverLink + "/ajax/books/" + logseq.settings.calibreLibrary
     console.log(fetch_link)
     let search_results;
+    try {
     fetch(fetch_link, 
         // {
         // method: 'GET',
@@ -83,7 +84,7 @@ function getCalibreItems(search_input) {
     )
     .then(response => {
         if (!response.ok) {
-            logseq.UI.showMsg('calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.');
+            logseq.UI.showMsg("Request to Calibre Content Server failed.", "error");
             console.log(response)
             return
         }
@@ -106,6 +107,16 @@ function getCalibreItems(search_input) {
 
             searchCalibreItems(search_results);
         })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            logseq.UI.showMsg("calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.", "error");
+        })
+    }
+    catch(error){
+        console.error('Other error:', error);
+        logseq.UI.showMsg("calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.", "error");
+    }
+
 }
 
 
