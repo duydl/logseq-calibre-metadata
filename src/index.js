@@ -71,51 +71,54 @@ search_bar.addEventListener("input", () => {
 
 
 function getCalibreItems(search_input) {
-    const fetch_link = logseq.settings.serverLink + "/ajax/books/" + logseq.settings.calibreLibrary
-    console.log(fetch_link)
-    let search_results;
-    try {
-    fetch(fetch_link, 
-        // {
-        // method: 'GET',
-        // credentials: 'include',
-        // headers: credentials
-        // }
-    )
-    .then(response => {
-        if (!response.ok) {
-            logseq.UI.showMsg("Request to Calibre Content Server failed.", "error");
-            console.log(response)
-            return
-        }
-        return response.json();})
-    .then(data => {
-            const books = [];
-            for (const key in data) {
-                if (data.hasOwnProperty(key)) {
-                    books.push(data[key])
-                }
-            }
-            // Search for calibre items with fuse.js
-            const options = {
-                threshold: 0.2,
-                keys: ["title", "authors"],
-                distance: 1000
-            };
-            const fuse = new Fuse(books, options);
-            search_results = fuse.search(search_input);
 
-            searchCalibreItems(search_results);
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            logseq.UI.showMsg("calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.", "error");
-        })
-    }
-    catch(error){
-        console.error('Other error:', error);
-        logseq.UI.showMsg("calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.", "error");
-    }
+    logseq.UI.showMsg("Plugin Deprecation Notice: This plugin has been deprecated. Its functionality has now been incorporated into the calibreAnnotation plugin.", "error");
+
+    // const fetch_link = logseq.settings.serverLink + "/ajax/books/" + logseq.settings.calibreLibrary
+    // console.log(fetch_link)
+    // let search_results;
+    // try {
+    // fetch(fetch_link, 
+    //     // {
+    //     // method: 'GET',
+    //     // credentials: 'include',
+    //     // headers: credentials
+    //     // }
+    // )
+    // .then(response => {
+    //     if (!response.ok) {
+    //         logseq.UI.showMsg("Request to Calibre Content Server failed.", "error");
+    //         console.log(response)
+    //         return
+    //     }
+    //     return response.json();})
+    // .then(data => {
+    //         const books = [];
+    //         for (const key in data) {
+    //             if (data.hasOwnProperty(key)) {
+    //                 books.push(data[key])
+    //             }
+    //         }
+    //         // Search for calibre items with fuse.js
+    //         const options = {
+    //             threshold: 0.2,
+    //             keys: ["title", "authors"],
+    //             distance: 1000
+    //         };
+    //         const fuse = new Fuse(books, options);
+    //         search_results = fuse.search(search_input);
+
+    //         searchCalibreItems(search_results);
+    //     })
+    //     .catch(error => {
+    //         console.error('Fetch error:', error);
+    //         logseq.UI.showMsg("calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.", "error");
+    //     })
+    // }
+    // catch(error){
+    //     console.error('Other error:', error);
+    //     logseq.UI.showMsg("calibreMetadata: Fail to fetch from Calibre API. Make sure to start the Content Server.", "error");
+    // }
 
 }
 
