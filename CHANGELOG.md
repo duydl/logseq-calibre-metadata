@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/duydl/logseq-calibre-metadata/compare/v1.2.1...v1.3.0) (2024-07-27)
+
+
+### Features
+
+* deprecate plugin ([3a11f1f](https://github.com/duydl/logseq-calibre-metadata/commit/3a11f1f19e8e7a7d106344830f2549c2d817faee))
+
 ## [1.2.1](https://github.com/duydl/logseq-calibre-metadata/compare/v1.2.0...v1.2.1) (2023-10-31)
 
 
