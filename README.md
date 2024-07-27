@@ -1,6 +1,6 @@
 ## ⚠️ Warning
 
-**This plugin has been deprecated. Its functionality has now been incorporated into the [`calibreAnnotation`](https://github.com/duydl/logseq-calibre-annotation)plugin.**
+**This plugin has been deprecated. Its functionality has now been incorporated into the [`calibreAnnotation`](https://github.com/duydl/logseq-calibre-annotation) plugin.**
 
 # Logseq Calibre Plugins
 
