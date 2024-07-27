@@ -1,4 +1,6 @@
-☕ [Get me a coffee](https://www.buymeacoffee.com/duydole00) if you like this work!
+## ⚠️ Warning
+
+**This plugin has been deprecated. Its functionality has now been incorporated into the [`calibreAnnotation` ](https://github.com/duydl/logseq-calibre-annotation)plugin.**
 
 # Logseq Calibre Plugins
 
